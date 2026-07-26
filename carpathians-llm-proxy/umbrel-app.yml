@@ -4,7 +4,7 @@ name: LLM Proxy
 tagline: Local GGUF models, chat, and OpenAI-compatible API on Umbrel
 icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.png
 category: ai
-version: "0.9.5"
+version: "0.9.6"
 port: 8788
 description: >-
   Download a GGUF model, run llama-server, and chat in the browser — or call
@@ -26,20 +26,18 @@ support: https://github.com/carpathians/store/issues
 gallery:
   - https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/gallery-1.png
 releaseNotes: >-
+  0.9.6 — Pick AMD Vulkan device (avoid Intel-first CPU fallback)
+
+
+  - --list-devices + -dev VulkanN for discrete AMD
+
+  - Log DRI access + ICD selection
+
+
+  0.9.5 — Line-buffer llama-server logs
+
+
   0.9.4 — Real CPU/GPU device status + sidebar metrics
-
-
-  - Use -ngl all (fixes silent CPU fallback from -ngl -1)
-
-  - Sidebar: device, layers, KV cache, VRAM
-
-  - Dashboard shows actual device, not just backend preference
-
-
-  0.9.3 — Persist app logs under DATA_DIR/logs/app.log
-
-
-  0.9.2 — Fix llama-server libgomp missing in image
 
 
   0.9.0 — Local GGUF chat + OpenAI-compatible API
