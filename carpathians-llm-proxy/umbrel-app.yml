@@ -2,7 +2,7 @@ manifestVersion: 1
 id: carpathians-llm-proxy
 name: LLM Proxy
 tagline: Local GGUF models, chat, and OpenAI-compatible API on Umbrel
-icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.svg
+icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.png
 category: ai
 version: "0.3.5"
 port: 8788
@@ -24,7 +24,7 @@ submission: https://github.com/carpathians/store
 repo: https://github.com/carpathians/llm-proxy
 support: https://github.com/carpathians/store/issues
 gallery:
-  - https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.svg
+  - https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/gallery-1.png
 releaseNotes: >-
   0.3.5 — Fix /data Permission denied on Umbrel
 
