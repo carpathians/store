@@ -6,6 +6,9 @@ services:
       # Format: <app-id>_<docker-service-name>_1
       APP_HOST: carpathians-llm-proxy_web_1
       APP_PORT: 8788
+      # OpenAI /v1 for OpenCode/curl — Bearer key enforced by llm-proxy (LAN API).
+      # Without this, Umbrel app_proxy 302s to :2000 and clients cannot connect.
+      PROXY_AUTH_WHITELIST: "/v1/*"
 
   web:
     image: ghcr.io/carpathians/llm-proxy:latest
