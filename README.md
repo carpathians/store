@@ -1,6 +1,6 @@
 # Carpathians Umbrel App Store
 
-Community App Store for [umbrelOS](https://umbrel.com).
+Community App Store based on the [Umbrel template](https://github.com/getumbrel/umbrel-community-app-store).
 
 ## Add on Umbrel
 
@@ -10,13 +10,21 @@ Community App Store for [umbrelOS](https://umbrel.com).
 https://github.com/carpathians/store
 ```
 
+Then open the **Carpathians** store and install **MRR AutoRent**.
+
+If an app does not appear: remove the store, re-add it, or run on the Umbrel host:
+
+```bash
+sudo ~/umbrel/scripts/repo update
+```
+
 ## Apps
 
-| App | ID | Image |
+| App | Folder / ID | Image |
 | --- | --- | --- |
-| MRR AutoRent | `carpathians-mrr-autorent` | `ghcr.io/iemanuel/mrr-autorent` |
+| MRR AutoRent | `carpathians-mrr-autorent` | `ghcr.io/carpathians/mrr-autorent:latest` |
 
-Upstream app source (private): https://github.com/iemanuel/mrr-autorent
+App id **must** start with the store id (`carpathians-`), matching [Umbrel’s community store rules](https://github.com/getumbrel/umbrel-community-app-store).
 
 ## Layout
 

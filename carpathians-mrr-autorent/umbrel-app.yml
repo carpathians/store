@@ -2,7 +2,7 @@ manifestVersion: 1
 id: carpathians-mrr-autorent
 name: MRR AutoRent
 tagline: Auto-rent Mining Rig Rentals deals from your Umbrel
-icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-mrr-autorent/icon.svg
+icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-mrr-autorent/icon.png
 category: finance
 version: "1.0.0"
 port: 8742
@@ -14,38 +14,39 @@ description: >-
   First run:
 
 
-  1. Open the app and go to Settings
+  1. Open the app — complete the setup wizard (API key + secret)
 
 
-  2. Paste your MRR API key + secret (Rent = Write)
+  2. Ensure Rent = Write on your MRR API key
 
 
   3. Pick a pool profile, tune filters, then enable AutoRent
 
 
-  API keys and SQLite state persist under Umbrel app data. Umbrel login protects
-  the UI via app_proxy.
+  Runs as Next.js web + dedicated worker sharing SQLite under Umbrel app data.
+  Umbrel login protects the UI via app_proxy.
 
 
   This app can spend your MRR balance when the worker is running — keep cooldown
   and filters conservative until you trust the setup.
 
-developer: iemanuel
-website: https://github.com/iemanuel/mrr-autorent
-submitter: iemanuel
+developer: Carpathians
+website: https://github.com/carpathians/store
+submitter: Carpathians
 submission: https://github.com/carpathians/store
-repo: https://github.com/iemanuel/mrr-autorent
-support: https://github.com/iemanuel/mrr-autorent/issues
-gallery: []
+repo: https://github.com/carpathians/mrr-autorent
+support: https://github.com/carpathians/store/issues
+gallery:
+  - https://raw.githubusercontent.com/carpathians/store/main/carpathians-mrr-autorent/gallery-1.png
 releaseNotes: >-
-  Initial Umbrel community app release.
+  1.0.0 — Next.js App Router + dedicated worker process.
 
 
-  - Browse / Good Deals / AutoRent worker
+  - Web and worker share DATA_DIR (SQLite + candidates.json)
 
-  - Persistent SQLite config + rental logs
+  - First-run setup wizard; same AutoRent rules (cooldown, ending-soon wait)
 
-  - Post-rent cooldown and ending-soon wait rules
+  - Umbrel compose: web + worker services
 dependencies: []
 path: ""
 defaultUsername: ""
