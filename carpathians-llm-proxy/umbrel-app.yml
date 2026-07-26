@@ -4,7 +4,7 @@ name: LLM Proxy
 tagline: Local GGUF models, chat, and OpenAI-compatible API on Umbrel
 icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.png
 category: ai
-version: "0.9.18"
+version: "0.9.19"
 port: 8788
 description: >-
   Download a GGUF model, run llama-server, and chat in the browser — or call
@@ -26,6 +26,13 @@ support: https://github.com/carpathians/store/issues
 gallery:
   - https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/gallery-1.png
 releaseNotes: >-
+  0.9.19 — Agents webfetch + Chat Web tools
+
+  - Agents gate starts with live webfetch (example.com) before write/read/edit
+  - Chat: Web tools toggle for webfetch / web_search via /api/tools
+  - Hot-patch friendly: /data/patches overlays server/agents/public
+  - GHCR image tagged 0.9.19 (survives container recreate)
+
   0.9.18 — OpenCode tool lift, stream usage, LFM chat-only
 
   - Lift OpenCode-style `% WebFetch` / `% bash` text into real tool_calls
