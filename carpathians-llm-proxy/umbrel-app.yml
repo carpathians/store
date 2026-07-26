@@ -4,7 +4,7 @@ name: LLM Proxy
 tagline: Local GGUF models, chat, and OpenAI-compatible API on Umbrel
 icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.png
 category: ai
-version: "0.9.16"
+version: "0.9.17"
 port: 8788
 description: >-
   Download a GGUF model, run llama-server, and chat in the browser — or call
@@ -26,6 +26,14 @@ support: https://github.com/carpathians/store/issues
 gallery:
   - https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/gallery-1.png
 releaseNotes: >-
+  0.9.17 — Exact model resolve (no newest-GGUF fallback)
+
+  - resolve_model maps OpenAI/OpenCode ids to exact local GGUF only
+  - Unknown/ambiguous ids return 404; bare local needs a loaded model
+  - UI chat sends the real selected filename (not silent newest-on-disk)
+  - Runtime start/ensure_ready no longer pick newest GGUF by mtime
+  - GHCR image tagged 0.9.17 (survives container recreate)
+
   0.9.16 — OpenCode tool_extract + durable image tag
 
   - Lift text-emitted tool calls to OpenAI tool_calls (OpenCode peg-native)
