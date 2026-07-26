@@ -4,7 +4,7 @@ name: LLM Proxy
 tagline: Local GGUF models, chat, and OpenAI-compatible API on Umbrel
 icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.png
 category: ai
-version: "0.9.4"
+version: "0.9.5"
 port: 8788
 description: >-
   Download a GGUF model, run llama-server, and chat in the browser — or call
