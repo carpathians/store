@@ -4,7 +4,7 @@ name: LLM Proxy
 tagline: Local GGUF models, chat, and OpenAI-compatible API on Umbrel
 icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.png
 category: ai
-version: "0.9.13"
+version: "0.9.14"
 port: 8788
 description: >-
   Download a GGUF model, run llama-server, and chat in the browser — or call
@@ -26,6 +26,11 @@ support: https://github.com/carpathians/store/issues
 gallery:
   - https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/gallery-1.png
 releaseNotes: >-
+  0.9.14 — OpenCode limits use loaded n_ctx (not GGUF train max)
+
+  - Export limit.context from runtime/settings/bench/32k fallback — never advertise 128k–1M when server runs at 32k–65k
+  - Avoids delayed compaction / context overflow with OpenCode
+
   0.9.13 — OpenCode multi-model + per-model context
 
   - GET /v1/models lists all downloaded GGUFs (real ids, not "Running GGUF")
