@@ -9,7 +9,7 @@ services:
 
   web:
     image: ghcr.io/carpathians/llm-proxy:latest
-    user: "1000:1000"
+    # No user: override — entrypoint starts as root, chowns /data, drops to 1000
     init: true
     restart: on-failure
     stop_grace_period: 1m

@@ -4,7 +4,7 @@ name: LLM Proxy
 tagline: Local GGUF models, chat, and OpenAI-compatible API on Umbrel
 icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.svg
 category: ai
-version: "0.3.4"
+version: "0.3.5"
 port: 8788
 description: >-
   Download a GGUF model, run llama-server, and chat in the browser — or call
@@ -26,6 +26,14 @@ support: https://github.com/carpathians/store/issues
 gallery:
   - https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.svg
 releaseNotes: >-
+  0.3.5 — Fix /data Permission denied on Umbrel
+
+
+  - Entrypoint chowns volume then drops to uid 1000
+
+  - Keeps GPU groups from /dev/dri nodes
+
+
   0.3.4 — Conditional GPU via Umbrel permissions
 
 
