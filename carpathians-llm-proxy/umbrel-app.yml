@@ -4,16 +4,15 @@ name: LLM Proxy
 tagline: Local GGUF models, chat, and OpenAI-compatible API on Umbrel
 icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.svg
 category: ai
-version: "0.3.3"
+version: "0.3.4"
 port: 8788
 description: >-
   Download a GGUF model, run llama-server, and chat in the browser — or call
   OpenAI-compatible /v1 APIs.
 
 
-  Default install is CPU-only (works when Umbrel runs in Docker without GPU
-  devices). For GPU, pass /dev/dri (and /dev/kfd) into the Umbrel OS container,
-  then add those mounts to this app's compose.
+  Uses Umbrel's GPU permission: /dev/dri is injected when present, otherwise
+  inference falls back to CPU automatically.
 
 
   Umbrel login protects the UI via app_proxy.
@@ -27,15 +26,15 @@ support: https://github.com/carpathians/store/issues
 gallery:
   - https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.svg
 releaseNotes: >-
-  0.3.3 — CPU default for Umbrel-in-Docker
+  0.3.4 — Conditional GPU via Umbrel permissions
 
 
-  - Drop required DRI/KFD mounts so `web` starts without GPU devices
+  - permissions: GPU (Umbrel mounts /dev/dri only when detected)
 
-  - GPU still supported when devices are passed into Umbrel OS first
+  - LLM_LLAMA_BACKEND=auto (CPU fallback when no GPU)
 
 
-  0.3.2 — GPU passthrough (breaks Umbrel without /dev/dri)
+  0.3.3 — CPU-only compose for Umbrel-in-Docker
 
 
   0.3.0 — AMD + NVIDIA GPU + dashboard
@@ -56,6 +55,8 @@ releaseNotes: >-
 
   0.1.0 — Phase 1 download wizard
 dependencies: []
+permissions:
+  - GPU
 path: ""
 defaultUsername: ""
 defaultPassword: ""

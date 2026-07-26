@@ -17,15 +17,10 @@ services:
       DATA_DIR: /data
       HOST: "0.0.0.0"
       PORT: "8788"
-      LLM_LLAMA_BACKEND: cpu
+      # auto → GPU when Umbrel injects /dev/dri (permissions: GPU), else CPU
+      LLM_LLAMA_BACKEND: auto
     volumes:
       - ${APP_DATA_DIR}/data:/data
-    # No /dev/dri|/dev/kfd here: Umbrel-in-Docker usually has neither, and
-    # Compose fails to create `web` → app_proxy "no such container".
-    # GPU: pass devices into the Umbrel OS container first, then add:
-    #   devices: [/dev/dri:/dev/dri, /dev/kfd:/dev/kfd]
-    #   group_add: [video, render]
-    #   environment LLM_LLAMA_BACKEND: auto
     healthcheck:
       test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8788/api/health', timeout=4)"]
       interval: 15s
