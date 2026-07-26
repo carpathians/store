@@ -1,0 +1,52 @@
+manifestVersion: 1
+id: carpathians-mrr-autorent
+name: MRR AutoRent
+tagline: Auto-rent Mining Rig Rentals deals from your Umbrel
+icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-mrr-autorent/icon.svg
+category: finance
+version: "1.0.0"
+port: 8742
+description: >-
+  MRR AutoRent scans MiningRigRentals for affordable hashrate deals, builds
+  multi-currency candidates, and can auto-rent when the worker is enabled.
+
+
+  First run:
+
+
+  1. Open the app and go to Settings
+
+
+  2. Paste your MRR API key + secret (Rent = Write)
+
+
+  3. Pick a pool profile, tune filters, then enable AutoRent
+
+
+  API keys and SQLite state persist under Umbrel app data. Umbrel login protects
+  the UI via app_proxy.
+
+
+  This app can spend your MRR balance when the worker is running — keep cooldown
+  and filters conservative until you trust the setup.
+
+developer: iemanuel
+website: https://github.com/iemanuel/mrr-autorent
+submitter: iemanuel
+submission: https://github.com/carpathians/store
+repo: https://github.com/iemanuel/mrr-autorent
+support: https://github.com/iemanuel/mrr-autorent/issues
+gallery: []
+releaseNotes: >-
+  Initial Umbrel community app release.
+
+
+  - Browse / Good Deals / AutoRent worker
+
+  - Persistent SQLite config + rental logs
+
+  - Post-rent cooldown and ending-soon wait rules
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
