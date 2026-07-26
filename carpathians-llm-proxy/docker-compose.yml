@@ -3,6 +3,7 @@ version: "3.7"
 services:
   app_proxy:
     environment:
+      # Format: <app-id>_<docker-service-name>_1
       APP_HOST: carpathians-llm-proxy_web_1
       APP_PORT: 8788
 
@@ -16,21 +17,15 @@ services:
       DATA_DIR: /data
       HOST: "0.0.0.0"
       PORT: "8788"
-      # auto → NVIDIA (CUDA/Vulkan) or AMD (Vulkan)
       LLM_LLAMA_BACKEND: auto
-      NVIDIA_VISIBLE_DEVICES: all
-      NVIDIA_DRIVER_CAPABILITIES: compute,utility,graphics
     volumes:
       - ${APP_DATA_DIR}/data:/data
-    # AMD (+ some NVIDIA via DRI). Host needs amdgpu and/or nvidia drivers.
-    devices:
-      - /dev/dri:/dev/dri
-      - /dev/kfd:/dev/kfd
-    group_add:
-      - video
-      - render
-    # If you use NVIDIA + nvidia-container-toolkit on the Umbrel host, also set:
-    #   runtime: nvidia
+    # GPU passthrough is host-specific. Mounting /dev/kfd or missing
+    # video/render groups makes Compose skip creating `web` → app_proxy
+    # "no such container". CPU works out of the box; add devices manually
+    # on Umbrel if you need AMD/NVIDIA:
+    #   devices: [/dev/dri:/dev/dri, /dev/kfd:/dev/kfd]
+    #   group_add: [video, render]
     healthcheck:
       test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8788/api/health', timeout=4)"]
       interval: 15s
