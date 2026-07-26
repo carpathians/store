@@ -20,12 +20,12 @@ services:
       LLM_LLAMA_BACKEND: auto
     volumes:
       - ${APP_DATA_DIR}/data:/data
-    # GPU passthrough is host-specific. Mounting /dev/kfd or missing
-    # video/render groups makes Compose skip creating `web` → app_proxy
-    # "no such container". CPU works out of the box; add devices manually
-    # on Umbrel if you need AMD/NVIDIA:
-    #   devices: [/dev/dri:/dev/dri, /dev/kfd:/dev/kfd]
-    #   group_add: [video, render]
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/kfd:/dev/kfd
+    group_add:
+      - video
+      - render
     healthcheck:
       test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8788/api/health', timeout=4)"]
       interval: 15s

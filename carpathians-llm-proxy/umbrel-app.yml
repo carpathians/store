@@ -4,18 +4,14 @@ name: LLM Proxy
 tagline: Local GGUF models, chat, and OpenAI-compatible API on Umbrel
 icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.svg
 category: ai
-version: "0.3.1"
+version: "0.3.2"
 port: 8788
 description: >-
-  Download a GGUF model, run llama-server on CPU (or GPU when you pass through
-  devices), and chat in the browser — or call OpenAI-compatible /v1 APIs.
+  Download a GGUF model, run llama-server on CPU or GPU (DRI/KFD passthrough),
+  and chat in the browser — or call OpenAI-compatible /v1 APIs.
 
 
-  Default install is CPU-only so Umbrel always creates the web container.
-  For AMD/NVIDIA, edit the app compose to mount /dev/dri (and /dev/kfd) and
-  add video/render groups, then restart.
-
-
+  Requires /dev/dri and /dev/kfd on the host (typical on AMD/NVIDIA boxes).
   Umbrel login protects the UI via app_proxy.
 
 developer: Carpathians
@@ -27,12 +23,19 @@ support: https://github.com/carpathians/store/issues
 gallery:
   - https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.svg
 releaseNotes: >-
+  0.3.2 — GPU passthrough restored
+
+
+  - Mount /dev/dri + /dev/kfd and video/render groups for Vulkan/ROCm
+
+
+  0.3.1 — CPU-only compose workaround (reverted in 0.3.2)
+
+
   0.3.0 — AMD + NVIDIA GPU + dashboard
 
 
   - Detect AMD and NVIDIA GPUs; Settings: auto / CPU / CUDA / Vulkan / ROCm
-
-  - Umbrel: /dev/dri + /dev/kfd; Vulkan for AMD (and NVIDIA on Linux)
 
   - Request analytics dashboard + system CPU/RAM/VRAM
 
