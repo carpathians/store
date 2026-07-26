@@ -1,0 +1,52 @@
+manifestVersion: 1
+id: carpathians-llm-proxy
+name: LLM Proxy
+tagline: Local GGUF models, chat, and OpenAI-compatible API on Umbrel
+icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.svg
+category: ai
+version: "0.3.0"
+port: 8788
+description: >-
+  Download a GGUF model, run llama-server on CPU or GPU (AMD Vulkan/ROCm,
+  NVIDIA CUDA/Vulkan), and chat in the browser — or call OpenAI-compatible
+  /v1 APIs on the same port.
+
+
+  Passes through /dev/dri and /dev/kfd for AMD. For NVIDIA, install
+  nvidia-container-toolkit on the host and optionally set runtime: nvidia.
+
+
+  Umbrel login protects the UI via app_proxy.
+
+developer: Carpathians
+website: https://github.com/carpathians/store
+submitter: Carpathians
+submission: https://github.com/carpathians/store
+repo: https://github.com/carpathians/llm-proxy
+support: https://github.com/carpathians/store/issues
+gallery:
+  - https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/icon.svg
+releaseNotes: >-
+  0.3.0 — AMD + NVIDIA GPU + dashboard
+
+
+  - Detect AMD and NVIDIA GPUs; Settings: auto / CPU / CUDA / Vulkan / ROCm
+
+  - Umbrel: /dev/dri + /dev/kfd; Vulkan for AMD (and NVIDIA on Linux)
+
+  - Request analytics dashboard + system CPU/RAM/VRAM
+
+
+  0.2.0 — Inference + chat
+
+
+  - Prebuilt llama-server (CPU) fetched on first start
+
+  - Chat UI + OpenAI-compatible /v1 on :8788
+
+
+  0.1.0 — Phase 1 download wizard
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
