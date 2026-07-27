@@ -22,8 +22,6 @@ services:
       PORT: "8788"
       # auto → GPU when Umbrel injects /dev/dri (permissions: GPU), else CPU
       LLM_LLAMA_BACKEND: auto
-      NVIDIA_VISIBLE_DEVICES: all
-      NVIDIA_DRIVER_CAPABILITIES: compute,utility,graphics
     volumes:
       - ${APP_DATA_DIR}/data:/data
     healthcheck:

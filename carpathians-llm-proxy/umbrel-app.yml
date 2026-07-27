@@ -26,10 +26,9 @@ support: https://github.com/carpathians/store/issues
 gallery:
   - https://raw.githubusercontent.com/carpathians/store/main/carpathians-llm-proxy/gallery-1.png
 releaseNotes: >-
-  0.9.20 — NVIDIA readiness + Umbrel toolkit patch
+  0.9.20 — NVIDIA host note
 
-  - Detect PCI-only NVIDIA (VRAM 0 B) vs real nvidia-smi / /dev/nvidia* runtime
-  - Clearer backend notes when Umbrel DRI path picks Intel instead of Quadro
+  - NVIDIA users must manually install NVIDIA drivers and nvidia-container-toolkit on the Umbrel host (not bundled)
   - GHCR image tagged 0.9.20 (pinned in store compose)
 
   0.9.19 — Agents webfetch + Chat Web tools
