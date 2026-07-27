@@ -11,7 +11,7 @@ services:
       PROXY_AUTH_WHITELIST: "/v1/*"
 
   web:
-    image: ghcr.io/carpathians/llm-proxy:latest
+    image: ghcr.io/carpathians/llm-proxy:0.9.20
     # No user: override — entrypoint starts as root, chowns /data, drops to 1000
     init: true
     restart: on-failure
@@ -22,6 +22,9 @@ services:
       PORT: "8788"
       # auto → GPU when Umbrel injects /dev/dri (permissions: GPU), else CPU
       LLM_LLAMA_BACKEND: auto
+      # Used after host nvidia-container-toolkit + compose GPU reservation (see scripts/umbrel-nvidia-enable.sh)
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility,graphics
     volumes:
       - ${APP_DATA_DIR}/data:/data
     healthcheck:
