@@ -15,10 +15,6 @@ description: >-
   inference falls back to CPU automatically.
 
 
-  For NVIDIA (optional): install nvidia-container-toolkit on the host and run
-  scripts/umbrel-nvidia-enable.sh from the llm-proxy repo.
-
-
   Umbrel login protects the UI via app_proxy.
 
 developer: Carpathians
@@ -34,7 +30,6 @@ releaseNotes: >-
 
   - Detect PCI-only NVIDIA (VRAM 0 B) vs real nvidia-smi / /dev/nvidia* runtime
   - Clearer backend notes when Umbrel DRI path picks Intel instead of Quadro
-  - scripts/umbrel-nvidia-enable.sh: install toolkit, patch compose, restart app
   - GHCR image tagged 0.9.20 (pinned in store compose)
 
   0.9.19 — Agents webfetch + Chat Web tools

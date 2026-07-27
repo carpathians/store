@@ -22,7 +22,6 @@ services:
       PORT: "8788"
       # auto → GPU when Umbrel injects /dev/dri (permissions: GPU), else CPU
       LLM_LLAMA_BACKEND: auto
-      # Used after host nvidia-container-toolkit + compose GPU reservation (see scripts/umbrel-nvidia-enable.sh)
       NVIDIA_VISIBLE_DEVICES: all
       NVIDIA_DRIVER_CAPABILITIES: compute,utility,graphics
     volumes:
