@@ -4,20 +4,20 @@ name: SplitMiner
 tagline: Split one ASIC into multiple virtual miners with pool alternation
 icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-miner-spliter/icon.png
 category: bitcoin
-version: "1.0.0"
+version: "1.2.0"
 port: 8755
 description: >-
   SplitMiner is a Stratum proxy that accepts one real ASIC/miner connection
   and splits it into multiple virtual miners, each on its own pool or worker.
   Uses pool alternation — the miner works on one pool's job at a time,
-  switching on a configurable timer. Includes a web dashboard with real-time
+  switching by target hashrate. Includes a web dashboard with real-time
   hashrate, share tracking, and CG-API per virtual miner.
 
 
   First run:
 
 
-  1. Open the app — configure virtual miners (pool URL, worker, password)
+  1. Open the app — configure virtual miners (pool URL, worker, optional target)
 
 
   2. Point your ASIC at stratum+tcp://YOUR_UMBREL_IP:3333
@@ -32,10 +32,10 @@ description: >-
   - Split one miner into N virtual miners
 
 
-  - Pool alternation with weighted round-robin
+  - Optional per-VM targets in TH/s or % of total hashrate
 
 
-  - 1% transparent dev fee (100% to fee when no valid user miners)
+  - Excess above targets routes to OVERFLOW when enabled
 
 
   - CG-API per VM (ports 4028+)
@@ -61,22 +61,19 @@ support: https://github.com/carpathians/store/issues
 gallery:
   - https://raw.githubusercontent.com/carpathians/store/main/carpathians-miner-spliter/gallery-1.png
 releaseNotes: >-
-  1.0.0 — Initial SplitMiner release.
+  1.2.0 — OVERFLOW miner, optional TH/% targets, dashboard UI.
 
 
-  - Stratum proxy with multi-VM pool alternation
+  - Excess above VM targets goes to OVERFLOW (no mandatory fee %)
 
 
-  - Web dashboard (masked wallet/fee addresses in UI)
+  - Optional per-VM targets in TH/s or percent of total hashrate
 
 
-  - Host ports 3333 (Stratum) and 4028–4030 (CG-API)
+  - Sidebar dashboard; create VM only on Save; live right log pane
 
 
-  - 1% transparent developer fee; fee-only failover when user miners unavailable
-
-
-  - Image: ghcr.io/carpathians/miner-spliter:latest
+  - Image: ghcr.io/carpathians/miner-spliter:1.2.0 (also :latest)
 dependencies: []
 path: ""
 defaultUsername: ""
