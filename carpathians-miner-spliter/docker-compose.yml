@@ -9,12 +9,12 @@ services:
 
   web:
     image: ghcr.io/carpathians/miner-spliter:latest
-    user: "1000:1000"
+    # No user: override — entrypoint starts as root, chowns /data, drops to 1000
     init: true
     restart: on-failure
     stop_grace_period: 1m
     ports:
-      # Stratum — point ASICs at <umbrel-ip>:3333
+      # Stratum — point ASICs at <umbrel-ip>:3333 (must be free on the host)
       - "3333:3333/tcp"
       # CG-API per virtual miner
       - "4028:4028/tcp"
