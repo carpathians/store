@@ -4,7 +4,7 @@ name: SplitMiner
 tagline: Split one ASIC into multiple virtual miners with pool alternation
 icon: https://raw.githubusercontent.com/carpathians/store/main/carpathians-miner-spliter/icon.png
 category: bitcoin
-version: "1.0.0"
+version: "1.0.1"
 port: 8755
 description: >-
   SplitMiner is a Stratum proxy that accepts one real ASIC/miner connection
@@ -35,7 +35,7 @@ description: >-
   - Pool alternation with weighted round-robin
 
 
-  - 1% transparent dev fee
+  - 1% transparent dev fee (100% to fee when no valid user miners)
 
 
   - CG-API per VM (ports 4028+)
@@ -61,23 +61,19 @@ support: https://github.com/carpathians/store/issues
 gallery:
   - https://raw.githubusercontent.com/carpathians/store/main/carpathians-miner-spliter/gallery-1.png
 releaseNotes: >-
-  1.0.0 — Initial SplitMiner release.
+  1.0.1 — Fee-only failover when user miners are unavailable.
 
 
-  - Stratum proxy with multi-VM pool alternation
+  - Route 100% to dev fee if VMs lack a wallet/worker or disconnect from pool
 
 
-  - Web dashboard on Umbrel (app_proxy)
+  - Resume normal split + 1% fee when eligible user VMs recover
 
 
-  - Host ports 3333 (Stratum) and 4028–4030 (CG-API)
+  - Dev fee: bc1qdvs9uw0w4tzt5z5et302p7tyqz0mp9a4zhsp0e
 
 
-  - 1% transparent developer fee
-    (bc1qdvs9uw0w4tzt5z5et302p7tyqz0mp9a4zhsp0e)
-
-
-  - GHCR image ghcr.io/carpathians/miner-spliter:latest
+  Image: ghcr.io/carpathians/miner-spliter:latest
 dependencies: []
 path: ""
 defaultUsername: ""
