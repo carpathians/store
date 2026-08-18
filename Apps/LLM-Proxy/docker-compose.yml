@@ -1,7 +1,7 @@
 name: llm-proxy
 services:
   llm-proxy:
-    image: ghcr.io/carpathians/llm-proxy:latest@sha256:716ff3f586b34870b6e10d85163d60937a565324d845510bf4c70ac7911be2fd
+    image: ghcr.io/carpathians/llm-proxy:latest
     container_name: llm-proxy
     init: true
     restart: unless-stopped
@@ -83,7 +83,7 @@ x-casaos:
       0.9.24 — Add GET /api/logs for remote debugging
 
       - Tail app.log and llama-server.log (`?lines=&source=`)
-      - Pin image latest@sha256 (immutable digest of 0.9.24)
+      - Image is `:latest`, same as the other store apps
   screenshot_link:
     - screenshot-1.png
   thumbnail: screenshot-1.png
