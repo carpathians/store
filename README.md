@@ -9,10 +9,8 @@ Third-party app store for **ZimaOS** and **CasaOS**.
 **Settings → App Store sources → Add**
 
 ```text
-https://carpathians.github.io/store
+https://carpathians.github.io/store/store.json
 ```
-
-Enable GitHub Pages on this repo (`gh-pages` branch) after the first `Release Store` workflow run.
 
 ### CasaOS
 
@@ -61,6 +59,6 @@ ZimaOS consumes the built `dist/` on GitHub Pages. CasaOS reads the `Apps/` tree
 
 ## Notes
 
-- **LLM Proxy GPU:** compose mounts `/dev/dri`. On a CPU-only host, remove `devices` before install. NVIDIA CUDA needs host drivers + nvidia-container-toolkit.
+- **LLM Proxy GPU:** NVIDIA via the same ZimaOS `deploy` reservation as Ollama (Nvidia GPU) (`driver: nvidia`, `count: -1`).
 - **SplitMiner:** host ports 3333 and 4028–4030 must be free. Point ASICs at `stratum+tcp://YOUR_HOST_IP:3333`.
 - **MRR AutoRent:** API key needs Rent = Write. The worker can spend MRR balance.

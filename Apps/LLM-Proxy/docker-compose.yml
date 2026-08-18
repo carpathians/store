@@ -6,7 +6,6 @@ services:
     init: true
     restart: unless-stopped
     stop_grace_period: 1m
-    network_mode: bridge
     ports:
       - target: 8788
         published: "8788"
@@ -16,14 +15,19 @@ services:
       HOST: "0.0.0.0"
       PORT: "8788"
       LLM_LLAMA_BACKEND: auto
-      NVIDIA_VISIBLE_DEVICES: all
-      NVIDIA_DRIVER_CAPABILITIES: compute,utility,graphics
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/data
         target: /data
-    devices:
-      - /dev/dri:/dev/dri
+    deploy:
+      resources:
+        reservations:
+          memory: 2G
+          devices:
+            - capabilities:
+                - gpu
+              driver: nvidia
+              count: -1
     healthcheck:
       test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8788/api/health', timeout=4)"]
       interval: 15s
@@ -34,10 +38,7 @@ services:
       envs:
         - container: LLM_LLAMA_BACKEND
           description:
-            en_US: Inference backend (auto, cpu, vulkan, cuda). auto uses GPU when /dev/dri is present.
-        - container: NVIDIA_VISIBLE_DEVICES
-          description:
-            en_US: NVIDIA GPU visibility. Requires nvidia-container-toolkit on the host.
+            en_US: Inference backend (auto, cpu, vulkan, cuda). auto uses NVIDIA when the host GPU is attached.
       ports:
         - container: "8788"
           description:
@@ -63,10 +64,9 @@ x-casaos:
       Download a GGUF model, run llama-server, and chat in the browser — or call
       OpenAI-compatible `/v1` APIs from OpenCode, curl, and other clients.
 
-      GPU: `/dev/dri` is mounted for AMD/Intel (and NVIDIA via Vulkan). NVIDIA CUDA
-      users should install drivers and nvidia-container-toolkit on the host. If this
-      host has no GPU device, remove the `devices` entry before install or the
-      container will fail to start.
+      NVIDIA: uses the same ZimaOS GPU reservation as Ollama (Nvidia GPU)
+      (`deploy.resources.reservations.devices`, driver `nvidia`, count `-1`).
+      No host setup script.
 
       Create an API key in the app settings, then point clients at
       `http://YOUR_HOST_IP:8788/v1`.
@@ -76,25 +76,21 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "0.9.20"
+  version: "0.9.21"
   update_at: "2026-08-18"
   release_notes:
     en_US: |
-      0.9.20 — CasaOS / ZimaOS store package
+      0.9.21 — NVIDIA via ZimaOS GPU reservation
 
-      - Published as a CasaOS/ZimaOS app (no Umbrel app_proxy)
-      - NVIDIA users still install drivers and nvidia-container-toolkit on the host
+      - Match Ollama (Nvidia GPU): deploy nvidia devices, count -1
+      - Drop /dev/dri and NVIDIA_* env (those do not attach the runtime)
   screenshot_link:
     - screenshot-1.png
   thumbnail: screenshot-1.png
   tips:
     before_install:
       en_US: |
-        Needs `/dev/dri` for GPU. On a CPU-only host, delete the `devices` section
-        in this compose before installing.
-
-        NVIDIA CUDA: install drivers + nvidia-container-toolkit on the host, then
-        add an NVIDIA runtime / device reservation if you want CUDA instead of Vulkan.
+        Requires a ZimaOS host with NVIDIA drivers (same as Ollama Nvidia GPU).
 
         After install, open port **8788** for the UI and `/v1` API.
   website: https://github.com/carpathians/store
