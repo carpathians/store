@@ -26,7 +26,7 @@ Then open **Carpathians** and install an app below.
 
 | App | Folder | Image | UI port |
 | --- | --- | --- | --- |
-| LLM Proxy | `Apps/LLM-Proxy` | `ghcr.io/carpathians/llm-proxy:0.9.23` | 8788 |
+| LLM Proxy | `Apps/LLM-Proxy` | `ghcr.io/carpathians/llm-proxy:0.9.24` | 8788 |
 | SplitMiner | `Apps/SplitMiner` | `ghcr.io/carpathians/miner-spliter:latest` | 8755 |
 | MRR AutoRent | `Apps/MRR-AutoRent` | `ghcr.io/carpathians/mrr-autorent:latest` | 8742 |
 
