@@ -15,6 +15,8 @@ services:
       HOST: "0.0.0.0"
       PORT: "8788"
       LLM_LLAMA_BACKEND: auto
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility,graphics
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/data
@@ -38,7 +40,7 @@ services:
       envs:
         - container: LLM_LLAMA_BACKEND
           description:
-            en_US: Inference backend (auto, cpu, vulkan, cuda). auto uses NVIDIA when the host GPU is attached.
+            en_US: Inference backend (auto, cpu, vulkan, cuda). auto uses CUDA when nvidia-smi reports compute ≥ 7.0, otherwise Vulkan.
       ports:
         - container: "8788"
           description:
@@ -64,9 +66,9 @@ x-casaos:
       Download a GGUF model, run llama-server, and chat in the browser — or call
       OpenAI-compatible `/v1` APIs from OpenCode, curl, and other clients.
 
-      NVIDIA: uses the same ZimaOS GPU reservation as Ollama (Nvidia GPU)
-      (`deploy.resources.reservations.devices`, driver `nvidia`, count `-1`).
-      No host setup script.
+      NVIDIA: ZimaOS GPU reservation (same as Ollama Nvidia GPU) plus
+      `nvidia-smi` inside the container. CUDA when compute ≥ 7.0;
+      Vulkan for older cards (Quadro K2200 / Maxwell).
 
       Create an API key in the app settings, then point clients at
       `http://YOUR_HOST_IP:8788/v1`.
@@ -76,14 +78,15 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "0.9.24"
+  version: "0.9.25"
   update_at: "2026-08-18"
   release_notes:
     en_US: |
-      0.9.24 — Add GET /api/logs for remote debugging
+      0.9.25 — NVIDIA via nvidia-smi in the container
 
-      - Tail app.log and llama-server.log (`?lines=&source=`)
-      - Image is `:latest`, same as the other store apps
+      - Drop Umbrel host-chroot / /host workarounds
+      - CUDA when compute ≥ 7.0; Vulkan for older NVIDIA
+      - Report CPU unless llama-server actually lists a GPU
   screenshot_link:
     - screenshot-1.png
   thumbnail: screenshot-1.png
