@@ -1,0 +1,103 @@
+name: llm-proxy
+services:
+  llm-proxy:
+    image: ghcr.io/carpathians/llm-proxy:0.9.20
+    container_name: llm-proxy
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 1m
+    network_mode: bridge
+    ports:
+      - target: 8788
+        published: "8788"
+        protocol: tcp
+    environment:
+      DATA_DIR: /data
+      HOST: "0.0.0.0"
+      PORT: "8788"
+      LLM_LLAMA_BACKEND: auto
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility,graphics
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    devices:
+      - /dev/dri:/dev/dri
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8788/api/health', timeout=4)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    x-casaos:
+      envs:
+        - container: LLM_LLAMA_BACKEND
+          description:
+            en_US: Inference backend (auto, cpu, vulkan, cuda). auto uses GPU when /dev/dri is present.
+        - container: NVIDIA_VISIBLE_DEVICES
+          description:
+            en_US: NVIDIA GPU visibility. Requires nvidia-container-toolkit on the host.
+      ports:
+        - container: "8788"
+          description:
+            en_US: Web UI and OpenAI-compatible /v1 API
+      volumes:
+        - container: /data
+          description:
+            en_US: Models, settings, and logs
+
+x-casaos:
+  id: com.carpathians.llm-proxy
+  main: llm-proxy
+  index: /
+  port_map: "8788"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/carpathians/store@main/Apps/LLM-Proxy/icon.svg
+  title:
+    en_US: LLM Proxy
+  tagline:
+    en_US: Local GGUF models, chat, and OpenAI-compatible API
+  description:
+    en_US: |
+      Download a GGUF model, run llama-server, and chat in the browser — or call
+      OpenAI-compatible `/v1` APIs from OpenCode, curl, and other clients.
+
+      GPU: `/dev/dri` is mounted for AMD/Intel (and NVIDIA via Vulkan). NVIDIA CUDA
+      users should install drivers and nvidia-container-toolkit on the host. If this
+      host has no GPU device, remove the `devices` entry before install or the
+      container will fail to start.
+
+      Create an API key in the app settings, then point clients at
+      `http://YOUR_HOST_IP:8788/v1`.
+  author: Carpathians
+  developer: Carpathians
+  category: AI
+  architectures:
+    - amd64
+    - arm64
+  version: "0.9.20"
+  update_at: "2026-08-18"
+  release_notes:
+    en_US: |
+      0.9.20 — CasaOS / ZimaOS store package
+
+      - Published as a CasaOS/ZimaOS app (no Umbrel app_proxy)
+      - NVIDIA users still install drivers and nvidia-container-toolkit on the host
+  screenshot_link:
+    - screenshot-1.png
+  thumbnail: screenshot-1.png
+  tips:
+    before_install:
+      en_US: |
+        Needs `/dev/dri` for GPU. On a CPU-only host, delete the `devices` section
+        in this compose before installing.
+
+        NVIDIA CUDA: install drivers + nvidia-container-toolkit on the host, then
+        add an NVIDIA runtime / device reservation if you want CUDA instead of Vulkan.
+
+        After install, open port **8788** for the UI and `/v1` API.
+  website: https://github.com/carpathians/store
+  repo: https://github.com/carpathians/llm-proxy
+  support: https://github.com/carpathians/store/issues
+  docs: https://github.com/carpathians/llm-proxy

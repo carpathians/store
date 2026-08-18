@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "store_id": "carpathians",
+  "name": {
+    "en_US": "Carpathians"
+  },
+  "description": {
+    "en_US": "Local AI and mining apps from Carpathians — LLM Proxy, SplitMiner, and MRR AutoRent."
+  },
+  "maintainer": "Carpathians",
+  "url": "https://github.com/carpathians/store",
+  "icon": "https://cdn.jsdelivr.net/gh/carpathians/store@main/Apps/LLM-Proxy/icon.svg"
+}

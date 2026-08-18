@@ -1,50 +1,66 @@
-# Carpathians Umbrel App Store
+# Carpathians App Store
 
-Community App Store based on the [Umbrel template](https://github.com/getumbrel/umbrel-community-app-store).
+Third-party app store for **ZimaOS** and **CasaOS**.
 
-## Add on Umbrel
+## Add the store
 
-**App Store → Community App Stores → Add**
+### ZimaOS
+
+**Settings → App Store sources → Add**
 
 ```text
-https://github.com/carpathians/store
+https://carpathians.github.io/store
 ```
 
-Then open the **Carpathians** store and install an app below.
+Enable GitHub Pages on this repo (`gh-pages` branch) after the first `Release Store` workflow run.
 
-If an app does not appear: remove the store, re-add it, or run on the Umbrel host:
+### CasaOS
 
-```bash
-sudo ~/umbrel/scripts/repo update
+**App Store → Add source** (paste the ZIP URL)
+
+```text
+https://github.com/carpathians/store/archive/refs/heads/main.zip
 ```
+
+Then open **Carpathians** and install an app below.
 
 ## Apps
 
-| App | Folder / ID | Image | UI port |
+| App | Folder | Image | UI port |
 | --- | --- | --- | --- |
-| MRR AutoRent | `carpathians-mrr-autorent` | `ghcr.io/carpathians/mrr-autorent:latest` | 8742 |
-| LLM Proxy | `carpathians-llm-proxy` | `ghcr.io/carpathians/llm-proxy:0.9.20` | 8788 |
-| SplitMiner | `carpathians-miner-spliter` | `ghcr.io/carpathians/miner-spliter:latest` | 8755 |
+| LLM Proxy | `Apps/LLM-Proxy` | `ghcr.io/carpathians/llm-proxy:0.9.20` | 8788 |
+| SplitMiner | `Apps/SplitMiner` | `ghcr.io/carpathians/miner-spliter:latest` | 8755 |
+| MRR AutoRent | `Apps/MRR-AutoRent` | `ghcr.io/carpathians/mrr-autorent:latest` | 8742 |
 
-App id **must** start with the store id (`carpathians-`), matching [Umbrel’s community store rules](https://github.com/getumbrel/umbrel-community-app-store).
+App identity is the reverse-domain `x-casaos.id` (`com.carpathians.*`). Persistent data lives under `/DATA/AppData/$AppID/data`.
 
 ## Layout
 
 ```text
-umbrel-app-store.yml
-carpathians-mrr-autorent/
-  umbrel-app.yml
+store-config.json
+supported-languages.json
+category-list.json
+recommend-list.json
+Apps/LLM-Proxy/
+  docker-compose.yml
+  icon.svg
+  icon.png
+  screenshot-1.png
+Apps/SplitMiner/
+  docker-compose.yml
+  icon.svg
+  icon.png
+  screenshot-1.png
+Apps/MRR-AutoRent/
   docker-compose.yml
   icon.png
-  gallery-1.png
-carpathians-llm-proxy/
-  umbrel-app.yml
-  docker-compose.yml
-  icon.png
-  gallery-1.png
-carpathians-miner-spliter/
-  umbrel-app.yml
-  docker-compose.yml
-  icon.png
-  gallery-1.png
+  screenshot-1.png
 ```
+
+ZimaOS consumes the built `dist/` on GitHub Pages. CasaOS reads the `Apps/` tree from the GitHub ZIP.
+
+## Notes
+
+- **LLM Proxy GPU:** compose mounts `/dev/dri`. On a CPU-only host, remove `devices` before install. NVIDIA CUDA needs host drivers + nvidia-container-toolkit.
+- **SplitMiner:** host ports 3333 and 4028–4030 must be free. Point ASICs at `stratum+tcp://YOUR_HOST_IP:3333`.
+- **MRR AutoRent:** API key needs Rent = Write. The worker can spend MRR balance.

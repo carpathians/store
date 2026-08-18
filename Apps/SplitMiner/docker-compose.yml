@@ -1,0 +1,122 @@
+name: miner-spliter
+services:
+  miner-spliter:
+    image: ghcr.io/carpathians/miner-spliter:latest
+    container_name: miner-spliter
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 1m
+    network_mode: bridge
+    ports:
+      - target: 3002
+        published: "8755"
+        protocol: tcp
+      - target: 3333
+        published: "3333"
+        protocol: tcp
+      - target: 4028
+        published: "4028"
+        protocol: tcp
+      - target: 4029
+        published: "4029"
+        protocol: tcp
+      - target: 4030
+        published: "4030"
+        protocol: tcp
+    environment:
+      CONFIG_PATH: /data/config.json
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3002/api/stats').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    x-casaos:
+      ports:
+        - container: "3002"
+          description:
+            en_US: Web dashboard (published on host port 8755)
+        - container: "3333"
+          description:
+            en_US: Stratum — point ASICs at YOUR_HOST_IP:3333
+        - container: "4028"
+          description:
+            en_US: CG-API virtual miner 1
+        - container: "4029"
+          description:
+            en_US: CG-API virtual miner 2
+        - container: "4030"
+          description:
+            en_US: CG-API virtual miner 3
+      volumes:
+        - container: /data
+          description:
+            en_US: SplitMiner config and state
+
+x-casaos:
+  id: com.carpathians.miner-spliter
+  main: miner-spliter
+  index: /
+  port_map: "8755"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/carpathians/store@main/Apps/SplitMiner/icon.svg
+  title:
+    en_US: SplitMiner
+  tagline:
+    en_US: Split one ASIC into multiple virtual miners with pool alternation
+  description:
+    en_US: |
+      SplitMiner is a Stratum proxy that accepts one real ASIC/miner connection
+      and splits it into multiple virtual miners, each on its own pool or worker.
+      Uses pool alternation — the miner works on one pool's job at a time,
+      switching by target hashrate. Includes a web dashboard with real-time
+      hashrate, share tracking, and CG-API per virtual miner.
+
+      First run:
+
+      1. Open the app — configure virtual miners (pool URL, worker, optional target)
+      2. Point your ASIC at `stratum+tcp://YOUR_HOST_IP:3333`
+      3. Watch shares and hashrate on the dashboard
+
+      Features:
+
+      - Split one miner into N virtual miners
+      - Optional per-VM targets in TH/s or % of total hashrate
+      - Excess above targets routes to OVERFLOW when enabled
+      - CG-API per VM (ports 4028+)
+      - Difficulty override for low-hashrate miners
+
+      Host ports **3333** and **4028–4030** must be free. If another stratum proxy
+      is already bound to 3333, the container will fail to start.
+  author: Carpathians
+  developer: Carpathians
+  category: Finance
+  architectures:
+    - amd64
+    - arm64
+  version: "1.2.0"
+  update_at: "2026-08-18"
+  release_notes:
+    en_US: |
+      1.2.0 — CasaOS / ZimaOS store package
+
+      - Published as a CasaOS/ZimaOS app (dashboard on host port 8755)
+      - OVERFLOW miner, optional TH/% targets, sidebar dashboard
+  screenshot_link:
+    - screenshot-1.png
+  thumbnail: screenshot-1.png
+  tips:
+    before_install:
+      en_US: |
+        Requires free host ports **3333** (Stratum) and **4028–4030** (CG-API).
+        The dashboard is on port **8755**.
+
+        After install, point the ASIC at `stratum+tcp://YOUR_HOST_IP:3333`.
+  website: https://github.com/carpathians/store
+  repo: https://github.com/carpathians/miner-spliter
+  support: https://github.com/carpathians/store/issues
+  docs: https://github.com/carpathians/miner-spliter

@@ -1,0 +1,114 @@
+name: mrr-autorent
+services:
+  mrr-autorent:
+    image: ghcr.io/carpathians/mrr-autorent:latest
+    container_name: mrr-autorent
+    user: "1000:1000"
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 1m
+    network_mode: bridge
+    ports:
+      - target: 3001
+        published: "8742"
+        protocol: tcp
+    environment:
+      DATA_DIR: /data
+      HOST: "0.0.0.0"
+      HOSTNAME: "0.0.0.0"
+      PORT: "3001"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3001/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    x-casaos:
+      ports:
+        - container: "3001"
+          description:
+            en_US: Web UI (published on host port 8742)
+      volumes:
+        - container: /data
+          description:
+            en_US: SQLite database and app data (shared with worker)
+
+  worker:
+    image: ghcr.io/carpathians/mrr-autorent:latest
+    container_name: mrr-autorent-worker
+    user: "1000:1000"
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 1m
+    command: ["node", "worker.mjs"]
+    environment:
+      DATA_DIR: /data
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      volumes:
+        - container: /data
+          description:
+            en_US: SQLite database and app data (shared with web)
+
+x-casaos:
+  id: com.carpathians.mrr-autorent
+  main: mrr-autorent
+  index: /
+  port_map: "8742"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/carpathians/store@main/Apps/MRR-AutoRent/icon.png
+  title:
+    en_US: MRR AutoRent
+  tagline:
+    en_US: Auto-rent Mining Rig Rentals deals from your NAS
+  description:
+    en_US: |
+      MRR AutoRent scans MiningRigRentals for affordable hashrate deals, builds
+      multi-currency candidates, and can auto-rent when the worker is enabled.
+
+      First run:
+
+      1. Open the app — complete the setup wizard (API key + secret)
+      2. Ensure Rent = Write on your MRR API key
+      3. Pick a pool profile, tune filters, then enable AutoRent
+
+      Runs as a Next.js web UI plus a dedicated worker sharing SQLite under
+      `/DATA/AppData`.
+
+      This app can spend your MRR balance when the worker is running — keep
+      cooldown and filters conservative until you trust the setup.
+  author: Carpathians
+  developer: Carpathians
+  category: Finance
+  architectures:
+    - amd64
+    - arm64
+  version: "1.0.2"
+  update_at: "2026-08-18"
+  release_notes:
+    en_US: |
+      1.0.2 — CasaOS / ZimaOS store package
+
+      - Published as a CasaOS/ZimaOS app (UI on host port 8742)
+      - Dashboard per-currency spent/earned/net breakdown
+  screenshot_link:
+    - screenshot-1.png
+  thumbnail: screenshot-1.png
+  tips:
+    before_install:
+      en_US: |
+        You need a MiningRigRentals API key with **Rent = Write**.
+
+        The worker can spend your MRR balance. Start with conservative filters
+        and cooldown. Dashboard is on port **8742**.
+  website: https://github.com/carpathians/store
+  repo: https://github.com/carpathians/mrr-autorent
+  support: https://github.com/carpathians/store/issues
+  docs: https://github.com/carpathians/mrr-autorent
