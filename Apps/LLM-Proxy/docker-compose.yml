@@ -1,7 +1,7 @@
 name: llm-proxy
 services:
   llm-proxy:
-    image: ghcr.io/carpathians/llm-proxy:0.9.20
+    image: ghcr.io/carpathians/llm-proxy:0.9.23
     container_name: llm-proxy
     init: true
     restart: unless-stopped
@@ -76,14 +76,14 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "0.9.21"
+  version: "0.9.23"
   update_at: "2026-08-18"
   release_notes:
     en_US: |
-      0.9.21 — NVIDIA via ZimaOS GPU reservation
+      0.9.23 — Drop Umbrel branding; pin image 0.9.23
 
-      - Match Ollama (Nvidia GPU): deploy nvidia devices, count -1
-      - Drop /dev/dri and NVIDIA_* env (those do not attach the runtime)
+      - UI and docs are ZimaOS/CasaOS (no Umbrel host script)
+      - NVIDIA reservation unchanged (Ollama Nvidia GPU style)
   screenshot_link:
     - screenshot-1.png
   thumbnail: screenshot-1.png
