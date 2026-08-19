@@ -1,0 +1,8 @@
+---
+description: Always pin LLM Proxy to the same version as llm-proxy VERSION
+alwaysApply: true
+---
+
+# Release with llm-proxy
+
+LLM Proxy store compose must use a versioned GHCR tag that matches `carpathians/llm-proxy` `VERSION` and `x-casaos.version`. When the app image is bumped, update this store in the same session and push. Never leave `:latest` or a stale tag in `Apps/LLM-Proxy/docker-compose.yml`.

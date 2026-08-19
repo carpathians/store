@@ -1,7 +1,7 @@
 name: llm-proxy
 services:
   llm-proxy:
-    image: ghcr.io/carpathians/llm-proxy:0.9.28
+    image: ghcr.io/carpathians/llm-proxy:0.9.30
     container_name: llm-proxy
     init: true
     restart: unless-stopped
@@ -82,14 +82,14 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "0.9.29"
+  version: "0.9.30"
   update_at: "2026-08-19"
   release_notes:
     en_US: |
-      0.9.29 — CUDA 12 tarball is on the public store repo
+      0.9.30 — plan GPU layers and min context; fix webfetch
 
-      Sets LLM_CUDA12_URL so the NAS can download the Maxwell
-      llama-server build (llm-proxy GitHub is private).
+      Explicit -ngl from VRAM (no llama.cpp --fit). Min context
+      offloads layers. Webfetch accepts any HTTP 200.
   screenshot_link:
     - screenshot-1.png
   thumbnail: screenshot-1.png

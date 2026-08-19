@@ -26,7 +26,7 @@ Then open **Carpathians** and install an app below.
 
 | App | Folder | Image | UI port |
 | --- | --- | --- | --- |
-| LLM Proxy | `Apps/LLM-Proxy` | `ghcr.io/carpathians/llm-proxy:0.9.28` | 8788 |
+| LLM Proxy | `Apps/LLM-Proxy` | `ghcr.io/carpathians/llm-proxy:0.9.30` | 8788 |
 | SplitMiner | `Apps/SplitMiner` | `ghcr.io/carpathians/miner-spliter:latest` | 8755 |
 | MRR AutoRent | `Apps/MRR-AutoRent` | `ghcr.io/carpathians/mrr-autorent:latest` | 8742 |
 
@@ -57,7 +57,7 @@ Apps/MRR-AutoRent/
 
 ZimaOS consumes the built `dist/` on GitHub Pages. CasaOS reads the `Apps/` tree from the GitHub ZIP.
 
-LLM Proxy follows IceWhale: pin a **version tag** (`:0.9.28`) that matches `x-casaos.version`. Do not use `:latest` in the store compose — ZimaOS then cannot offer Update.
+LLM Proxy follows IceWhale: pin a **version tag** that matches `x-casaos.version` (currently `:0.9.30`). Do not use `:latest`. Always ship the store bump in the same release as the llm-proxy `VERSION` / GHCR tag.
 
 The CUDA 12 Maxwell `llama-server` tarball is a GitHub Release on this public repo (`llama-cuda12`), not a git file. The private llm-proxy repo cannot serve that download to a NAS.
 
