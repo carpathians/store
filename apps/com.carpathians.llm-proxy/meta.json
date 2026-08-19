@@ -1,0 +1,36 @@
+{
+  "tagline": "Local GGUF models, chat, and OpenAI-compatible API",
+  "description": "Download a GGUF model, run llama-server, and chat in the browser — or call\nOpenAI-compatible `/v1` APIs from OpenCode, curl, and other clients.\n\nNVIDIA: ZimaOS GPU reservation (same as Ollama Nvidia GPU) plus\n`nvidia-smi` inside the container. CUDA 12 with Maxwell `50-virtual`\n(Quadro K2200). Vulkan for AMD.\n\nCreate an API key in the app settings, then point clients at\n`http://YOUR_HOST_IP:8788/v1`.\n",
+  "author": "Carpathians",
+  "developer": "Carpathians",
+  "category": "AI",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "update_at": "2026-08-19",
+  "screenshot_link": [
+    "/apps/com.carpathians.llm-proxy/assets/screenshot-1.webp"
+  ],
+  "thumbnail": "/apps/com.carpathians.llm-proxy/assets/screenshot-1.webp",
+  "tips": {
+    "before_install": "Requires a ZimaOS host with NVIDIA drivers (same as Ollama Nvidia GPU).\n\nAfter install, open port **8788** for the UI and `/v1` API.\n"
+  },
+  "website": "https://github.com/carpathians/store",
+  "repo": "https://github.com/carpathians/llm-proxy",
+  "support": "https://github.com/carpathians/store/issues",
+  "docs": "https://github.com/carpathians/llm-proxy",
+  "title": "LLM Proxy",
+  "release_note": "0.9.30 — plan GPU layers and min context; fix webfetch\n\nExplicit -ngl from VRAM (no llama.cpp --fit). Min context\noffloads layers. Webfetch accepts any HTTP 200.\n",
+  "base_url": "https://carpathians.github.io/store",
+  "id": "com.carpathians.llm-proxy",
+  "version": "0.9.30",
+  "categories": [
+    "ai"
+  ],
+  "min_memory": 2147483648,
+  "min_image_size": {
+    "amd64": 146669911,
+    "arm64": 140320475
+  }
+}

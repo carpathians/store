@@ -1,0 +1,3 @@
+ghcr.io/carpathians/llm-proxy:0.9.30 sha256:f9736d5a31b05571a5db630a0ee51eacabc46f77d3c746dd794bfca8e8026d19
+ghcr.io/carpathians/miner-spliter:latest sha256:e188e55873efd85dadddc24246b6ca0772042d7ddb66f1d54e576ffac3e51a67
+ghcr.io/carpathians/mrr-autorent:latest sha256:6b54a9e7234abac873da18dceca00a13211c4087512ca7f02dafc24c79469cb0

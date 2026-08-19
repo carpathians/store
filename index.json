@@ -1,0 +1,71 @@
+{
+  "version": 2,
+  "updated_at": "2026-08-19T12:22:48Z",
+  "app_count": 3,
+  "base_url": "https://carpathians.github.io/store",
+  "apps": [
+    {
+      "id": "com.carpathians.llm-proxy",
+      "title": "LLM Proxy",
+      "tagline": "Local GGUF models, chat, and OpenAI-compatible API",
+      "category": "AI",
+      "categories": [
+        "ai"
+      ],
+      "author": "Carpathians",
+      "developer": "Carpathians",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/com.carpathians.llm-proxy/assets/icon.svg",
+      "thumbnail": "/apps/com.carpathians.llm-proxy/assets/screenshot-1.webp",
+      "compose_url": "/apps/com.carpathians.llm-proxy/docker-compose.yml",
+      "meta_url": "/apps/com.carpathians.llm-proxy/meta.json",
+      "content_hash": "e81f7f3a",
+      "version": "0.9.30"
+    },
+    {
+      "id": "com.carpathians.miner-spliter",
+      "title": "SplitMiner",
+      "tagline": "Split one ASIC into multiple virtual miners with pool alternation",
+      "category": "Finance",
+      "categories": [
+        "finance"
+      ],
+      "author": "Carpathians",
+      "developer": "Carpathians",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/com.carpathians.miner-spliter/assets/icon.svg",
+      "thumbnail": "/apps/com.carpathians.miner-spliter/assets/screenshot-1.webp",
+      "compose_url": "/apps/com.carpathians.miner-spliter/docker-compose.yml",
+      "meta_url": "/apps/com.carpathians.miner-spliter/meta.json",
+      "content_hash": "4e2ac251",
+      "version": "1.2.0"
+    },
+    {
+      "id": "com.carpathians.mrr-autorent",
+      "title": "MRR AutoRent",
+      "tagline": "Auto-rent Mining Rig Rentals deals from your NAS",
+      "category": "Finance",
+      "categories": [
+        "finance"
+      ],
+      "author": "Carpathians",
+      "developer": "Carpathians",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/com.carpathians.mrr-autorent/assets/icon.png",
+      "thumbnail": "/apps/com.carpathians.mrr-autorent/assets/screenshot-1.webp",
+      "compose_url": "/apps/com.carpathians.mrr-autorent/docker-compose.yml",
+      "meta_url": "/apps/com.carpathians.mrr-autorent/meta.json",
+      "content_hash": "9e35184a",
+      "version": "1.0.2"
+    }
+  ]
+}

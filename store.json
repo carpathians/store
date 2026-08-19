@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "store_id": "carpathians",
+  "name": "Carpathians",
+  "description": "Local AI and mining apps from Carpathians — LLM Proxy, SplitMiner, and MRR AutoRent.",
+  "maintainer": "Carpathians",
+  "url": "https://github.com/carpathians/store"
+}

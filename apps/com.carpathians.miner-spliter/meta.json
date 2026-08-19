@@ -1,0 +1,36 @@
+{
+  "tagline": "Split one ASIC into multiple virtual miners with pool alternation",
+  "description": "SplitMiner is a Stratum proxy that accepts one real ASIC/miner connection\nand splits it into multiple virtual miners, each on its own pool or worker.\nUses pool alternation — the miner works on one pool's job at a time,\nswitching by target hashrate. Includes a web dashboard with real-time\nhashrate, share tracking, and CG-API per virtual miner.\n\nFirst run:\n\n1. Open the app — configure virtual miners (pool URL, worker, optional target)\n2. Point your ASIC at `stratum+tcp://YOUR_HOST_IP:3333`\n3. Watch shares and hashrate on the dashboard\n\nFeatures:\n\n- Split one miner into N virtual miners\n- Optional per-VM targets in TH/s or % of total hashrate\n- Excess above targets routes to OVERFLOW when enabled\n- CG-API per VM (ports 4028+)\n- Difficulty override for low-hashrate miners\n\nHost ports **3333** and **4028–4030** must be free. If another stratum proxy\nis already bound to 3333, the container will fail to start.\n",
+  "author": "Carpathians",
+  "developer": "Carpathians",
+  "category": "Finance",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "update_at": "2026-08-18",
+  "screenshot_link": [
+    "/apps/com.carpathians.miner-spliter/assets/screenshot-1.webp"
+  ],
+  "thumbnail": "/apps/com.carpathians.miner-spliter/assets/screenshot-1.webp",
+  "tips": {
+    "before_install": "Requires free host ports **3333** (Stratum) and **4028–4030** (CG-API).\nThe dashboard is on port **8755**.\n\nAfter install, point the ASIC at `stratum+tcp://YOUR_HOST_IP:3333`.\n"
+  },
+  "website": "https://github.com/carpathians/store",
+  "repo": "https://github.com/carpathians/miner-spliter",
+  "support": "https://github.com/carpathians/store/issues",
+  "docs": "https://github.com/carpathians/miner-spliter",
+  "title": "SplitMiner",
+  "release_note": "1.2.0 — CasaOS / ZimaOS store package\n\n- Published as a CasaOS/ZimaOS app (dashboard on host port 8755)\n- OVERFLOW miner, optional TH/% targets, sidebar dashboard\n",
+  "base_url": "https://carpathians.github.io/store",
+  "id": "com.carpathians.miner-spliter",
+  "version": "1.2.0",
+  "categories": [
+    "finance"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 49891382,
+    "arm64": 50553573
+  }
+}

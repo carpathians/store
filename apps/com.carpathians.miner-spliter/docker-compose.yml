@@ -1,0 +1,47 @@
+name: miner-spliter
+services:
+  miner-spliter:
+    image: ghcr.io/carpathians/miner-spliter:latest
+    container_name: miner-spliter
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 1m
+    network_mode: bridge
+    ports:
+      - target: 3002
+        published: "8755"
+        protocol: tcp
+      - target: 3333
+        published: "3333"
+        protocol: tcp
+      - target: 4028
+        published: "4028"
+        protocol: tcp
+      - target: 4029
+        published: "4029"
+        protocol: tcp
+      - target: 4030
+        published: "4030"
+        protocol: tcp
+    environment:
+      CONFIG_PATH: /data/config.json
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3002/api/stats').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+x-casaos:
+  id: com.carpathians.miner-spliter
+  main: miner-spliter
+  index: /
+  port_map: "8755"
+  scheme: http
+  icon: https://carpathians.github.io/store/apps/com.carpathians.miner-spliter/assets/icon.svg
+  title:
+    en_US: SplitMiner
+  version: "1.2.0"
