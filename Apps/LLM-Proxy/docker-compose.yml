@@ -1,7 +1,7 @@
 name: llm-proxy
 services:
   llm-proxy:
-    image: ghcr.io/carpathians/llm-proxy:latest@sha256:cb7cf36aca6763bd71c636648b3d484724e12227d44a51827e507c2b03e51864
+    image: ghcr.io/carpathians/llm-proxy:0.9.28
     container_name: llm-proxy
     init: true
     restart: unless-stopped
@@ -78,14 +78,14 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "0.9.27"
+  version: "0.9.28"
   update_at: "2026-08-19"
   release_notes:
     en_US: |
-      0.9.27 — pin the 0.9.26 image digest so ZimaOS offers Update
+      0.9.28 — IceWhale-style versioned image tag
 
-      Pulls ghcr.io/carpathians/llm-proxy:latest@sha256:cb7cf36a…
-      (CUDA 12 Maxwell / K2200 llama-server).
+      Pulls `ghcr.io/carpathians/llm-proxy:0.9.28` (not `:latest`).
+      CUDA 12 Maxwell / K2200 llama-server.
   screenshot_link:
     - screenshot-1.png
   thumbnail: screenshot-1.png
