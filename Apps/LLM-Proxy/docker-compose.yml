@@ -15,6 +15,7 @@ services:
       HOST: "0.0.0.0"
       PORT: "8788"
       LLM_LLAMA_BACKEND: auto
+      LLM_CUDA12_URL: https://github.com/carpathians/store/releases/download/llama-cuda12/llama-bin-linux-cuda12-x64.tar.gz
       NVIDIA_VISIBLE_DEVICES: all
       NVIDIA_DRIVER_CAPABILITIES: compute,utility,graphics
     volumes:
@@ -41,6 +42,9 @@ services:
         - container: LLM_LLAMA_BACKEND
           description:
             en_US: Inference backend (auto, cpu, vulkan, cuda). auto uses CUDA when nvidia-smi works (including Maxwell / K2200).
+        - container: LLM_CUDA12_URL
+          description:
+            en_US: Public URL for the CUDA 12 Maxwell llama-server tarball.
       ports:
         - container: "8788"
           description:
@@ -78,14 +82,14 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "0.9.28"
+  version: "0.9.29"
   update_at: "2026-08-19"
   release_notes:
     en_US: |
-      0.9.28 — IceWhale-style versioned image tag
+      0.9.29 — CUDA 12 tarball is on the public store repo
 
-      Pulls `ghcr.io/carpathians/llm-proxy:0.9.28` (not `:latest`).
-      CUDA 12 Maxwell / K2200 llama-server.
+      Sets LLM_CUDA12_URL so the NAS can download the Maxwell
+      llama-server build (llm-proxy GitHub is private).
   screenshot_link:
     - screenshot-1.png
   thumbnail: screenshot-1.png

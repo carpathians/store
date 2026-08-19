@@ -59,6 +59,8 @@ ZimaOS consumes the built `dist/` on GitHub Pages. CasaOS reads the `Apps/` tree
 
 LLM Proxy follows IceWhale: pin a **version tag** (`:0.9.28`) that matches `x-casaos.version`. Do not use `:latest` in the store compose — ZimaOS then cannot offer Update.
 
+The CUDA 12 Maxwell `llama-server` tarball is a GitHub Release on this public repo (`llama-cuda12`), not a git file. The private llm-proxy repo cannot serve that download to a NAS.
+
 ## Notes
 
 - **LLM Proxy GPU:** NVIDIA via the same ZimaOS `deploy` reservation as Ollama (Nvidia GPU) (`driver: nvidia`, `count: -1`).
