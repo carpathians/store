@@ -1,0 +1,194 @@
+name: strata
+
+services:
+  strata:
+    # Official image. cuda13 = NVIDIA RTX 20/30/40/50 with driver 580+.
+    # Other cards: 0.2.9-cuda12 (GTX 10 / Pascal / Volta, driver 575-579),
+    # 0.2.9-rocm-gfx120x (RX 9000), 0.2.9-rocm-gfx110x (RX 7000),
+    # 0.2.9-rocm-gfx1151 (Strix Halo), 0.2.9-sycl (Intel Arc).
+    image: ghcr.io/niko1221/strata:0.2.9-cuda13
+    container_name: strata
+    restart: unless-stopped
+    stop_grace_period: 2m
+    ports:
+      - target: 8080
+        published: "8088"
+        protocol: tcp
+    environment:
+      # Default: Qwen3.6-35B-A3B, 22.9 GB download, 32 GB RAM.
+      # Qwen3.8-Flash-Next: FAMILY=qwen, MODEL=Q2_0 (66-76 GB download, 48 GB+ RAM).
+      # DeepSeek V4.1-Flash: FAMILY=deepseek41, MODEL=ist-das-2.00bpw (257 GB, 46-64 GB RAM).
+      FAMILY: "qwen36"
+      MODEL: "UD-Q4_K_XL"
+      CONTEXT: "32k"
+      PARALLEL: "1"
+      VISION: "off"
+      KV: "int8"
+      TUNE: "skip"
+      PRESET: "docker"
+      PORT: "8080"
+      # Blank = Strata generates a key on first start and keeps it in /data.
+      # Show it with: docker exec strata strata launch --show-key --preset docker
+      API_KEY: ""
+      # Optional: a folder or .gguf inside the container, for models you already have.
+      MODEL_PATH: ""
+      # Optional: card numbers, e.g. "0" or "0,1". Blank = all that fit.
+      GPU: ""
+      # Optional advanced engine settings, space separated KEY=VALUE.
+      STRATA_SET: ""
+      # The image already sets these; kept explicit for the ZimaOS GPU reservation.
+      NVIDIA_VISIBLE_DEVICES: "all"
+      NVIDIA_DRIVER_CAPABILITIES: "compute,utility"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: -1 # -1 = all NVIDIA GPUs, the same form LLM Proxy uses
+              capabilities:
+                - gpu
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    shm_size: 2gb
+    # No memory limit: Strata plans from the host's whole RAM and loads tens of GB.
+    # The image's healthcheck asks GET /v1/models with the key. The image gives it
+    # a 2 hour start period; 6 hours avoids a false "unhealthy" on a slow first
+    # download (Qwen3.8 is 66-76 GB). It is still "starting" until the model loads.
+    healthcheck:
+      test: ["CMD", "/opt/strata/healthcheck.sh"]
+      interval: 30s
+      timeout: 8s
+      retries: 3
+      start_period: 6h
+
+    x-casaos:
+      envs:
+        - container: FAMILY
+          description:
+            en_US: Model family. qwen36 = Qwen3.6-35B-A3B (default, 32 GB RAM). qwen = Qwen3.8-Flash-Next (48 GB+). coder = Qwen3.8 Coder (coding only). deepseek41 = DeepSeek V4.1-Flash.
+        - container: MODEL
+          description:
+            en_US: Model size. qwen36 - UD-Q4_K_XL (32 GB RAM), UD-Q6_K_XL (44 GB), Q8_0 (52 GB). qwen - Q2_0 (37.6 GB weights, 48 GB+ RAM), IQ2_XS (39.2 GB, 48 GB+), IQ3_XXS (47 GB, 64 GB), IQ3_S (54.8 GB, 64 GB+). deepseek41 - ist-das-1.75bpw, ist-das-2.00bpw, ist-das-2.25bpw (257-274 GB download, 46-64 GB RAM).
+        - container: CONTEXT
+          description:
+            en_US: Context window - 32k, 64k, 128k, 256k, or a number of tokens. 32k is a safe default for coding tools.
+        - container: PARALLEL
+          description:
+            en_US: Requests answered at the same time (1-8). 1 is safest on a 12 GB card; raise to 2-4 on a 24 GB+ card.
+        - container: VISION
+          description:
+            en_US: off or on. On downloads a 0.9 GB picture reader; below 24 GB VRAM it runs on the CPU.
+        - container: KV
+          description:
+            en_US: Conversation memory format - int8 (default), q4_0 (about half the memory), k8v4, fp16.
+        - container: TUNE
+          description:
+            en_US: skip (default), quick (up to about 20 minutes, once), thorough (up to about 2 hours, once). Tuning is kept in /data.
+        - container: API_KEY
+          description:
+            en_US: 16+ characters. Blank = Strata makes one on first start. Show it with docker exec strata strata launch --show-key --preset docker.
+        - container: MODEL_PATH
+          description:
+            en_US: Optional. Folder or .gguf inside the container for models you already have. Mount it read-only and set this; otherwise leave blank.
+        - container: GPU
+          description:
+            en_US: Optional. Card numbers, e.g. 0 or 0,1. Blank = all cards that fit.
+        - container: STRATA_SET
+          description:
+            en_US: Optional advanced engine settings, space separated KEY=VALUE. Leave blank for the defaults.
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web UI, OpenAI-compatible /v1 API, Anthropic-compatible /v1/messages, and /health
+      volumes:
+        - container: /data
+          description:
+            en_US: Models, prepared packs, MTP draft layer, tuning, presets, and API key. Allow 40 GB+ for Qwen3.6, 100 GB+ for Qwen3.8, 300 GB+ for DeepSeek.
+
+x-casaos:
+  id: com.carpathians.strata
+  main: strata
+  index: /
+  port_map: "8088"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/carpathians/store@main/Apps/Strata/icon.png
+  title:
+    en_US: Strata
+  tagline:
+    en_US: Qwen3.8, Qwen3.6, and DeepSeek on your own GPU
+  description:
+    en_US: |
+      Strata runs high-end mixture-of-experts models on a single consumer GPU.
+      The default is Qwen3.6-35B-A3B (22.9 GB download, 32 GB RAM, about
+      60 tokens/s on an RTX 3060). Qwen3.8-Flash-Next and DeepSeek V4.1-Flash
+      are selectable with FAMILY and MODEL.
+
+      It exposes an OpenAI-compatible `/v1` API and an Anthropic-compatible
+      `/v1/messages` API, so OpenCode, Claude Code, curl, and other clients can
+      use it. The web UI is on port 8088. Every API request needs the key.
+
+      This store entry ships the official `ghcr.io/niko1221/strata:0.2.9-cuda13`
+      image for NVIDIA RTX 20/30/40/50 cards with driver 580 or newer.
+
+      Need Qwen3.8-Flash-Next? Set `FAMILY=qwen` and `MODEL=Q2_0`: 66-76 GB
+      download, 48 GB+ RAM. DeepSeek V4.1-Flash: `FAMILY=deepseek41` and
+      `MODEL=ist-das-2.00bpw`: 257 GB download, 46-64 GB RAM.
+
+      AMD RX 7000/9000, Strix Halo, Intel Arc, and NVIDIA GTX 10/Pascal need
+      a different image tag (see the docs). There is no CPU-only or Vulkan path.
+
+      CasaOS/ZimaOS packaging by Carpathians. Strata is developed by Niko1221.
+  author: Niko1221
+  developer: Niko1221
+  category: AI
+  architectures:
+    - amd64
+  version: "0.2.9"
+  update_at: "2026-10-31"
+  release_notes:
+    en_US: |
+      0.2.9 - official CUDA 13 image for NVIDIA RTX 20/30/40/50.
+
+      Default model: Qwen3.6-35B-A3B UD-Q4_K_XL (22.9 GB, 32 GB RAM).
+      Set FAMILY/MODEL for Qwen3.8-Flash-Next or DeepSeek V4.1-Flash.
+
+      First start downloads the model; watch the app logs. The API key is
+      generated on first start unless you set API_KEY.
+  screenshot_link:
+    - screenshot-1.png
+    - screenshot-2.png
+  thumbnail: screenshot-1.png
+  tips:
+    before_install:
+      en_US: |
+        NVIDIA RTX 20/30/40/50 with driver 580+ and the NVIDIA Container
+        Toolkit. 12 GB+ VRAM and 32 GB+ RAM for the default Qwen3.6 model;
+        48 GB+ RAM for Qwen3.8 Q2_0; 46-64 GB RAM for DeepSeek.
+
+        Allow 40 GB+ free in /DATA/AppData for Qwen3.6, 100 GB+ for Qwen3.8,
+        and 300 GB+ for DeepSeek. The first start downloads the model (tens of
+        GB) and shows "starting" in the app while it does.
+
+        GTX 10/Pascal, AMD, and Intel Arc need a different image tag; this
+        entry ships cuda13 for RTX 20-50. There is no CPU-only path.
+    after_install:
+      en_US: |
+        Open http://YOUR_HOST_IP:8088 for the UI. The OpenAI-compatible base
+        URL is http://YOUR_HOST_IP:8088/v1 (model name from GET /v1/models);
+        the Anthropic-compatible base URL is http://YOUR_HOST_IP:8088.
+
+        The API key is generated on first start. Show it with:
+
+        docker exec strata strata launch --show-key --preset docker
+
+        Or set API_KEY to your own 16+ character key before installing.
+  website: https://github.com/Niko1221/Strata
+  repo: https://github.com/Niko1221/Strata
+  support: https://github.com/Niko1221/Strata/issues
+  docs: https://github.com/Niko1221/Strata/blob/main/docs/DOCKER.md
