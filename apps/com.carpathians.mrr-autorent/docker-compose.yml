@@ -1,0 +1,53 @@
+name: mrr-autorent
+services:
+  mrr-autorent:
+    image: ghcr.io/carpathians/mrr-autorent:latest
+    container_name: mrr-autorent
+    user: "1000:1000"
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 1m
+    network_mode: bridge
+    ports:
+      - target: 3001
+        published: "8742"
+        protocol: tcp
+    environment:
+      DATA_DIR: /data
+      HOST: "0.0.0.0"
+      HOSTNAME: "0.0.0.0"
+      PORT: "3001"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3001/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+  worker:
+    image: ghcr.io/carpathians/mrr-autorent:latest
+    container_name: mrr-autorent-worker
+    user: "1000:1000"
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 1m
+    command: ["node", "worker.mjs"]
+    environment:
+      DATA_DIR: /data
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+x-casaos:
+  id: com.carpathians.mrr-autorent
+  main: mrr-autorent
+  index: /
+  port_map: "8742"
+  scheme: http
+  icon: https://carpathians.github.io/store/apps/com.carpathians.mrr-autorent/assets/icon.png
+  title:
+    en_US: MRR AutoRent
+  version: "1.0.2"
