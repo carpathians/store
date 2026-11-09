@@ -1,7 +1,7 @@
 name: miner-spliter
 services:
   miner-spliter:
-    image: ghcr.io/carpathians/miner-spliter:1.4.1
+    image: ghcr.io/carpathians/miner-spliter:1.4.2
     container_name: miner-spliter
     init: true
     restart: unless-stopped
@@ -84,16 +84,14 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.4.1"
+  version: "1.4.2"
   update_at: "2026-11-09"
   release_notes:
     en_US: |
-      1.4.1
+      1.4.2
 
-      - Home Assistant configuration sets how many virtual miners are allowed
-      - CG-API ports run from 4028 through 4043, one per virtual miner
-      - Each ASIC keeps moving through its allocation instead of staying on the largest target
-      - Dashboard can set the stratum port and restart the proxy
+      - Same app as 1.4.1, published so Home Assistant can offer the update
+      - Configuration still sets the virtual-miner limit, from 1 to 16
   screenshot_link:
     - screenshot-1.png
   thumbnail: screenshot-1.png
