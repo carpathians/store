@@ -1,7 +1,7 @@
 name: miner-spliter
 services:
   miner-spliter:
-    image: ghcr.io/carpathians/miner-spliter:1.4.2
+    image: ghcr.io/carpathians/miner-spliter:1.4.3
     container_name: miner-spliter
     init: true
     restart: unless-stopped
@@ -84,13 +84,14 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.4.2"
+  version: "1.4.3"
   update_at: "2026-11-09"
   release_notes:
     en_US: |
-      1.4.2
+      1.4.3
 
-      - Same app as 1.4.1, published so Home Assistant can offer the update
+      - Next pool is the one most behind on accepted work for its target
+      - A reconnecting pool keeps its target; a closed pool's target is shared by the pools still up
       - Configuration still sets the virtual-miner limit, from 1 to 16
   screenshot_link:
     - screenshot-1.png
