@@ -32,7 +32,7 @@ The same repository is a Home Assistant add-on store.
 https://github.com/carpathians/store
 ```
 
-Install **SplitMiner**. The dashboard is `http://<home-assistant-ip>:3002`. Point ASICs at `stratum+tcp://<home-assistant-ip>:3333`.
+Install **SplitMiner**, then set **Maximum virtual miners** on the add-on Configuration tab (1–16). The dashboard is `http://<home-assistant-ip>:3002`. Point ASICs at `stratum+tcp://<home-assistant-ip>:3333`.
 
 ## Apps
 
@@ -86,5 +86,5 @@ The CUDA 12 Maxwell `llama-server` tarball is a GitHub Release on this public re
 
 - **LLM Proxy GPU:** NVIDIA via the same ZimaOS `deploy` reservation as Ollama (Nvidia GPU) (`driver: nvidia`, `count: -1`).
 - **Strata:** NVIDIA RTX 20/30/40/50, driver 580+, 12 GB+ VRAM, 32 GB+ RAM. The store entry ships `0.2.9-cuda13` and defaults to Qwen3.6-35B-A3B; set `FAMILY` / `MODEL` for Qwen3.8-Flash-Next or DeepSeek. GTX 10/Pascal, AMD, and Intel Arc need a different upstream image tag. No CPU-only path.
-- **SplitMiner:** host ports 3333 and 4028–4030 must be free. Point ASICs at `stratum+tcp://YOUR_HOST_IP:3333`.
+- **SplitMiner:** host ports 3333 and 4028–4043 must be free. Point ASICs at `stratum+tcp://YOUR_HOST_IP:3333`. Up to 16 virtual miners, one CG-API port each.
 - **MRR AutoRent:** API key needs Rent = Write. The worker can spend MRR balance.

@@ -1,0 +1,4 @@
+configuration:
+  max_virtual_miners:
+    name: Maximum virtual miners
+    description: How many virtual miners can be added. Each one uses the next CG-API port, starting at 4028. Saving restarts the add-on.

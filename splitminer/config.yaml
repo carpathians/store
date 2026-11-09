@@ -10,18 +10,48 @@ arch:
 startup: application
 boot: auto
 init: false
+options:
+  max_virtual_miners: 8
+schema:
+  max_virtual_miners: "int(1,16)"
 ports:
   3002/tcp: 3002
   3333/tcp: 3333
   4028/tcp: 4028
   4029/tcp: 4029
   4030/tcp: 4030
+  4031/tcp: 4031
+  4032/tcp: 4032
+  4033/tcp: 4033
+  4034/tcp: 4034
+  4035/tcp: 4035
+  4036/tcp: 4036
+  4037/tcp: 4037
+  4038/tcp: 4038
+  4039/tcp: 4039
+  4040/tcp: 4040
+  4041/tcp: 4041
+  4042/tcp: 4042
+  4043/tcp: 4043
 ports_description:
   3002/tcp: "Web dashboard"
   3333/tcp: "Stratum (ASIC connects here)"
-  4028/tcp: "CG-API VM 1"
-  4029/tcp: "CG-API VM 2"
-  4030/tcp: "CG-API VM 3"
+  4028/tcp: "CG-API virtual miner 1"
+  4029/tcp: "CG-API virtual miner 2"
+  4030/tcp: "CG-API virtual miner 3"
+  4031/tcp: "CG-API virtual miner 4"
+  4032/tcp: "CG-API virtual miner 5"
+  4033/tcp: "CG-API virtual miner 6"
+  4034/tcp: "CG-API virtual miner 7"
+  4035/tcp: "CG-API virtual miner 8"
+  4036/tcp: "CG-API virtual miner 9"
+  4037/tcp: "CG-API virtual miner 10"
+  4038/tcp: "CG-API virtual miner 11"
+  4039/tcp: "CG-API virtual miner 12"
+  4040/tcp: "CG-API virtual miner 13"
+  4041/tcp: "CG-API virtual miner 14"
+  4042/tcp: "CG-API virtual miner 15"
+  4043/tcp: "CG-API virtual miner 16"
 webui: "http://[HOST]:[PORT:3002]/"
 panel_icon: "mdi:axe"
 panel_title: "SplitMiner"
