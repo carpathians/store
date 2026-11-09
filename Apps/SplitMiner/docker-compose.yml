@@ -14,7 +14,54 @@ services:
       - target: 3333
         published: "3333"
         protocol: tcp
-      - "4028-4043:4028-4043"
+      - target: 4028
+        published: "4028"
+        protocol: tcp
+      - target: 4029
+        published: "4029"
+        protocol: tcp
+      - target: 4030
+        published: "4030"
+        protocol: tcp
+      - target: 4031
+        published: "4031"
+        protocol: tcp
+      - target: 4032
+        published: "4032"
+        protocol: tcp
+      - target: 4033
+        published: "4033"
+        protocol: tcp
+      - target: 4034
+        published: "4034"
+        protocol: tcp
+      - target: 4035
+        published: "4035"
+        protocol: tcp
+      - target: 4036
+        published: "4036"
+        protocol: tcp
+      - target: 4037
+        published: "4037"
+        protocol: tcp
+      - target: 4038
+        published: "4038"
+        protocol: tcp
+      - target: 4039
+        published: "4039"
+        protocol: tcp
+      - target: 4040
+        published: "4040"
+        protocol: tcp
+      - target: 4041
+        published: "4041"
+        protocol: tcp
+      - target: 4042
+        published: "4042"
+        protocol: tcp
+      - target: 4043
+        published: "4043"
+        protocol: tcp
     environment:
       CONFIG_PATH: /data/config.json
     volumes:
@@ -35,9 +82,54 @@ services:
         - container: "3333"
           description:
             en_US: Stratum — point ASICs at YOUR_HOST_IP:3333
-        - container: "4028-4043"
+        - container: "4028"
           description:
-            en_US: CG-API, one port per virtual miner (4028 is miner 1, up to 16 miners)
+            en_US: CG-API virtual miner 1
+        - container: "4029"
+          description:
+            en_US: CG-API virtual miner 2
+        - container: "4030"
+          description:
+            en_US: CG-API virtual miner 3
+        - container: "4031"
+          description:
+            en_US: CG-API virtual miner 4
+        - container: "4032"
+          description:
+            en_US: CG-API virtual miner 5
+        - container: "4033"
+          description:
+            en_US: CG-API virtual miner 6
+        - container: "4034"
+          description:
+            en_US: CG-API virtual miner 7
+        - container: "4035"
+          description:
+            en_US: CG-API virtual miner 8
+        - container: "4036"
+          description:
+            en_US: CG-API virtual miner 9
+        - container: "4037"
+          description:
+            en_US: CG-API virtual miner 10
+        - container: "4038"
+          description:
+            en_US: CG-API virtual miner 11
+        - container: "4039"
+          description:
+            en_US: CG-API virtual miner 12
+        - container: "4040"
+          description:
+            en_US: CG-API virtual miner 13
+        - container: "4041"
+          description:
+            en_US: CG-API virtual miner 14
+        - container: "4042"
+          description:
+            en_US: CG-API virtual miner 15
+        - container: "4043"
+          description:
+            en_US: CG-API virtual miner 16
       volumes:
         - container: /data
           description:
