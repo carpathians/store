@@ -1,7 +1,7 @@
 name: miner-spliter
 services:
   miner-spliter:
-    image: ghcr.io/carpathians/miner-spliter:1.4.4
+    image: ghcr.io/carpathians/miner-spliter:1.4.5
     container_name: miner-spliter
     init: true
     restart: unless-stopped
@@ -176,15 +176,15 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.4.4"
+  version: "1.4.5"
   update_at: "2026-11-09"
   release_notes:
     en_US: |
-      1.4.4
+      1.4.5
 
+      - CG-API ports 4028–4043 are listed one by one so ZimaOS accepts the port mappings
       - Home Assistant and CasaOS dashboard themes, with each install picking its matching default
       - Theme can be changed in Settings and is saved in config
-      - Configuration still sets the virtual-miner limit, from 1 to 16
   screenshot_link:
     - screenshot-1.png
   thumbnail: screenshot-1.png

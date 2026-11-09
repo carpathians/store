@@ -40,7 +40,7 @@ Install **SplitMiner**, then set **Maximum virtual miners** on the add-on Config
 | --- | --- | --- | --- |
 | LLM Proxy | `Apps/LLM-Proxy` | `ghcr.io/carpathians/llm-proxy:0.9.30` | 8788 |
 | Strata | `Apps/Strata` | `ghcr.io/niko1221/strata:0.2.9-cuda13` | 8088 |
-| SplitMiner | `Apps/SplitMiner` | `ghcr.io/carpathians/miner-spliter:1.4.4` | 8755 |
+| SplitMiner | `Apps/SplitMiner` | `ghcr.io/carpathians/miner-spliter:1.4.5` | 8755 |
 | MRR AutoRent | `Apps/MRR-AutoRent` | `ghcr.io/carpathians/mrr-autorent:latest` | 8742 |
 
 App identity is the reverse-domain `x-casaos.id` (`com.carpathians.*`). Persistent data lives under `/DATA/AppData/$AppID/data`.
