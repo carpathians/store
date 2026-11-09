@@ -22,6 +22,18 @@ https://github.com/carpathians/store/archive/refs/heads/main.zip
 
 Then open **Carpathians** and install an app below.
 
+### Home Assistant
+
+The same repository is a Home Assistant add-on store. Supervisor clones this public repo, then pulls the public image. The private app repository is not involved.
+
+**Settings → Apps → Install app → ⋮ → Repositories**
+
+```text
+https://github.com/carpathians/store
+```
+
+Install **SplitMiner**. The dashboard is `http://<home-assistant-ip>:3002`. Point ASICs at `stratum+tcp://<home-assistant-ip>:3333`.
+
 ## Apps
 
 | App | Folder | Image | UI port |
@@ -36,10 +48,13 @@ App identity is the reverse-domain `x-casaos.id` (`com.carpathians.*`). Persiste
 ## Layout
 
 ```text
+repository.yaml
 store-config.json
 supported-languages.json
 category-list.json
 recommend-list.json
+splitminer/
+  config.yaml
 Apps/LLM-Proxy/
   docker-compose.yml
   icon.svg
