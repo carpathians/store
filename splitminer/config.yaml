@@ -1,5 +1,5 @@
 name: "SplitMiner"
-version: "1.4.0"
+version: "1.4.1"
 slug: "splitminer"
 description: "Stratum proxy that splits one or more ASICs across virtual miners, with a built-in web dashboard."
 url: "https://github.com/carpathians/store"

@@ -1,7 +1,7 @@
 name: miner-spliter
 services:
   miner-spliter:
-    image: ghcr.io/carpathians/miner-spliter:1.4.0
+    image: ghcr.io/carpathians/miner-spliter:1.4.1
     container_name: miner-spliter
     init: true
     restart: unless-stopped
@@ -84,17 +84,16 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.4.0"
-  update_at: "2026-11-03"
+  version: "1.4.1"
+  update_at: "2026-11-09"
   release_notes:
     en_US: |
-      1.4.0
+      1.4.1
 
-      - Each ASIC mines its own virtual miner, so three machines can cover three pools
-      - ASIC difficulty follows the pool it is on, not the highest pool in the farm
-      - Uncovered virtual miners are filled before OVERFLOW
-      - Dashboard shows the live hashrate flow from each ASIC
-      - Shares are counted at the difficulty the ASIC actually mined
+      - Home Assistant configuration sets how many virtual miners are allowed
+      - CG-API ports run from 4028 through 4043, one per virtual miner
+      - Each ASIC keeps moving through its allocation instead of staying on the largest target
+      - Dashboard can set the stratum port and restart the proxy
   screenshot_link:
     - screenshot-1.png
   thumbnail: screenshot-1.png
