@@ -24,7 +24,7 @@ Then open **Carpathians** and install an app below.
 
 ### Home Assistant
 
-The same repository is a Home Assistant add-on store. Supervisor clones this public repo, then pulls the public image. The private app repository is not involved.
+The same repository is a Home Assistant add-on store.
 
 **Settings → Apps → Install app → ⋮ → Repositories**
 

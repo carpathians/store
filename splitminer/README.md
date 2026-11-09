@@ -1,7 +1,5 @@
 # SplitMiner for Home Assistant
 
-The app source repository is private. This public store is the add-on repository Home Assistant clones. The container is the public image `ghcr.io/carpathians/miner-spliter:1.4.0`.
-
 ## Install
 
 1. In Home Assistant, open **Settings → Apps → Install app → ⋮ → Repositories**.
