@@ -1,7 +1,7 @@
 name: miner-spliter
 services:
   miner-spliter:
-    image: ghcr.io/carpathians/miner-spliter:1.4.7
+    image: ghcr.io/carpathians/miner-spliter:1.4.8
     container_name: miner-spliter
     init: true
     restart: unless-stopped
@@ -176,16 +176,16 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.4.7"
+  version: "1.4.8"
   update_at: "2026-11-10"
   release_notes:
     en_US: |
-      1.4.7
+      1.4.8
 
-      - Underfilled user targets take ASICs before OVERFLOW
-      - Bitaxe clean-switch hold is 60s; suggest_difficulty nacks are ignored
-      - Dashboard total hashrate chart and per-VM sparklines
-      - Hashrate flow labels use miner # instead of wallet
+      - Measured hashrate cover so over-target VMs yield ASICs to OVERFLOW
+      - Persistent hashrate history across refresh and restart
+      - Chart periods 5m / 30m / 1h / 1d with 1m / 10m / 1h averages on cards
+      - Compact full-width dashboard layout
   screenshot_link:
     - screenshot-1.png
   thumbnail: screenshot-1.png
