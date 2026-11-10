@@ -1,7 +1,7 @@
 name: miner-spliter
 services:
   miner-spliter:
-    image: ghcr.io/carpathians/miner-spliter:1.4.8
+    image: ghcr.io/carpathians/miner-spliter:1.4.9
     container_name: miner-spliter
     init: true
     restart: unless-stopped
@@ -176,16 +176,15 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.4.8"
+  version: "1.4.9"
   update_at: "2026-11-10"
   release_notes:
     en_US: |
-      1.4.8
+      1.4.9
 
-      - Measured hashrate cover so over-target VMs yield ASICs to OVERFLOW
-      - Persistent hashrate history across refresh and restart
-      - Chart periods 5m / 30m / 1h / 1d with 1m / 10m / 1h averages on cards
-      - Compact full-width dashboard layout
+      - Persist VM share windows so 1m/10m/1h survive restart
+      - Leave targets when parked ASIC TH already exceeds alloc
+      - Best-fit ASIC assignment; cap early hard-share hashrate spikes
   screenshot_link:
     - screenshot-1.png
   thumbnail: screenshot-1.png
