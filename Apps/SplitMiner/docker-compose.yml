@@ -1,7 +1,7 @@
 name: miner-spliter
 services:
   miner-spliter:
-    image: ghcr.io/carpathians/miner-spliter:1.4.9
+    image: ghcr.io/carpathians/miner-spliter:1.4.10
     container_name: miner-spliter
     init: true
     restart: unless-stopped
@@ -176,15 +176,15 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.4.9"
+  version: "1.4.10"
   update_at: "2026-11-10"
   release_notes:
     en_US: |
-      1.4.9
+      1.4.10
 
-      - Persist VM share windows so 1m/10m/1h survive restart
-      - Leave targets when parked ASIC TH already exceeds alloc
-      - Best-fit ASIC assignment; cap early hard-share hashrate spikes
+      - Target / Actual / Reach % on VM cards (MRR-style)
+      - Boost mode dumps excess until Reach hits ~100%
+      - Boost badge while under target
   screenshot_link:
     - screenshot-1.png
   thumbnail: screenshot-1.png
