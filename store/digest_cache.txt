@@ -1,0 +1,4 @@
+ghcr.io/carpathians/llm-proxy:0.9.30 sha256:f9736d5a31b05571a5db630a0ee51eacabc46f77d3c746dd794bfca8e8026d19
+ghcr.io/carpathians/miner-spliter:1.4.10 sha256:f34fa06d45455607bb9ad84d00f53304d4bcb88cedd231b9c97c07479b16bc2a
+ghcr.io/carpathians/mrr-autorent:latest sha256:6b54a9e7234abac873da18dceca00a13211c4087512ca7f02dafc24c79469cb0
+ghcr.io/niko1221/strata:0.2.9-cuda13 sha256:83e37db8625c67b61c579fd7c0f9068f2d831037a937f139c569502b54290998

@@ -1,0 +1,79 @@
+name: strata
+
+services:
+  strata:
+    # Official image. cuda13 = NVIDIA RTX 20/30/40/50 with driver 580+.
+    # Other cards: 0.2.9-cuda12 (GTX 10 / Pascal / Volta, driver 575-579),
+    # 0.2.9-rocm-gfx120x (RX 9000), 0.2.9-rocm-gfx110x (RX 7000),
+    # 0.2.9-rocm-gfx1151 (Strix Halo), 0.2.9-sycl (Intel Arc).
+    image: ghcr.io/niko1221/strata:0.2.9-cuda13
+    container_name: strata
+    restart: unless-stopped
+    stop_grace_period: 2m
+    ports:
+      - target: 8080
+        published: "8088"
+        protocol: tcp
+    environment:
+      # Default: Qwen3.6-35B-A3B, 22.9 GB download, 32 GB RAM.
+      # Qwen3.8-Flash-Next: FAMILY=qwen, MODEL=Q2_0 (66-76 GB download, 48 GB+ RAM).
+      # DeepSeek V4.1-Flash: FAMILY=deepseek41, MODEL=ist-das-2.00bpw (257 GB, 46-64 GB RAM).
+      FAMILY: "qwen36"
+      MODEL: "UD-Q4_K_XL"
+      CONTEXT: "32k"
+      PARALLEL: "1"
+      VISION: "off"
+      KV: "int8"
+      TUNE: "skip"
+      PRESET: "docker"
+      PORT: "8080"
+      # Blank = Strata generates a key on first start and keeps it in /data.
+      # Show it with: docker exec strata strata launch --show-key --preset docker
+      API_KEY: ""
+      # Optional: a folder or .gguf inside the container, for models you already have.
+      MODEL_PATH: ""
+      # Optional: card numbers, e.g. "0" or "0,1". Blank = all that fit.
+      GPU: ""
+      # Optional advanced engine settings, space separated KEY=VALUE.
+      STRATA_SET: ""
+      # The image already sets these; kept explicit for the ZimaOS GPU reservation.
+      NVIDIA_VISIBLE_DEVICES: "all"
+      NVIDIA_DRIVER_CAPABILITIES: "compute,utility"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: -1 # -1 = all NVIDIA GPUs, the same form LLM Proxy uses
+              capabilities:
+                - gpu
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    shm_size: 2gb
+    # No memory limit: Strata plans from the host's whole RAM and loads tens of GB.
+    # The image's healthcheck asks GET /v1/models with the key. The image gives it
+    # a 2 hour start period; 6 hours avoids a false "unhealthy" on a slow first
+    # download (Qwen3.8 is 66-76 GB). It is still "starting" until the model loads.
+    healthcheck:
+      test: ["CMD", "/opt/strata/healthcheck.sh"]
+      interval: 30s
+      timeout: 8s
+      retries: 3
+      start_period: 6h
+
+x-casaos:
+  id: com.carpathians.strata
+  main: strata
+  index: /
+  port_map: "8088"
+  scheme: http
+  icon: https://carpathians.github.io/store/apps/com.carpathians.strata/assets/icon.png
+  title:
+    en_US: Strata
+  version: "0.2.9"

@@ -1,0 +1,49 @@
+name: llm-proxy
+services:
+  llm-proxy:
+    image: ghcr.io/carpathians/llm-proxy:0.9.30@sha256:ba523bbbb4d4a4973a798daa129add4b1f021ca76906e495928d0e76c852f43c
+    container_name: llm-proxy
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 1m
+    ports:
+      - target: 8788
+        published: "8788"
+        protocol: tcp
+    environment:
+      DATA_DIR: /data
+      HOST: "0.0.0.0"
+      PORT: "8788"
+      LLM_LLAMA_BACKEND: auto
+      LLM_CUDA12_URL: https://github.com/carpathians/store/releases/download/llama-cuda12/llama-bin-linux-cuda12-x64.tar.gz
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility,graphics
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    deploy:
+      resources:
+        reservations:
+          memory: 2G
+          devices:
+            - capabilities:
+                - gpu
+              driver: nvidia
+              count: -1
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8788/api/health', timeout=4)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+x-casaos:
+  id: com.carpathians.llm-proxy
+  main: llm-proxy
+  index: /
+  port_map: "8788"
+  scheme: http
+  icon: https://carpathians.github.io/store/apps/com.carpathians.llm-proxy/assets/icon.svg
+  title:
+    en_US: LLM Proxy
+  version: "0.9.30"
